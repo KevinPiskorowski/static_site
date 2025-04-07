@@ -41,8 +41,8 @@ def split_nodes_link(old_nodes):
         if len(links) == 0:
             new_nodes.append(node)
         for link in links:
-            split = old_text.split(f"![{link[0]}]({link[1]})", 1)
-            if len(split) !=2:
+            split = old_text.split(f"[{link[0]}]({link[1]})", 1)
+            if len(split) != 2:
                 raise ValueError("invalid markdown")
             if split[0] != "":
                 new_nodes.append(TextNode(split[0], TextType.TEXT))
@@ -82,6 +82,8 @@ def split_nodes_image(old_nodes):
     return new_nodes
 
 def text_to_textnodes(text):
+    if "**" not in text and "_" not in text and "`" not in text and "![" not in text and "[" not in text:
+        return [TextNode(text, TextType.TEXT)]
     nodes = [TextNode(text, TextType.TEXT)]
     nodes = split_nodes_delimiter(nodes, "**", TextType.BOLD)
     nodes = split_nodes_delimiter(nodes, "_", TextType.ITALIC)

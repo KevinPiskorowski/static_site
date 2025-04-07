@@ -25,7 +25,7 @@ def markdown_to_blocks(markdown):
 
 def block_to_blocktype(block):
     lines = block.split("\n")
-    if block.startswith("# ", "## ", "### ", "#### ", "##### ", "###### "):
+    if block.startswith(("# ", "## ", "### ", "#### ", "##### ", "###### ")):
         return BlockType.HEAD
     if len(lines)>1 and block.startswith("```") and block.endswith("```"):
         return BlockType.CODE
@@ -59,15 +59,15 @@ def markdown_to_html_node(markdown):
 
 def block_to_html_node(block):
     block_type = block_to_blocktype(block)
-    if block_type == BlockType.PARAGRAPH:
+    if block_type == BlockType.PARA:
         return paragraph_to_html_node(block)
-    if block_type == BlockType.HEADING:
+    if block_type == BlockType.HEAD:
         return heading_to_html_node(block)
     if block_type == BlockType.CODE:
         return code_to_html_node(block)
-    if block_type == BlockType.OLIST:
+    if block_type == BlockType.ORDERED:
         return olist_to_html_node(block)
-    if block_type == BlockType.ULIST:
+    if block_type == BlockType.UNORDERED:
         return ulist_to_html_node(block)
     if block_type == BlockType.QUOTE:
         return quote_to_html_node(block)
